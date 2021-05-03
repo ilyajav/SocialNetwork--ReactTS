@@ -1,0 +1,17 @@
+.item{
+    margin: 15px 0;
+}
+
+
+.item textarea{
+    margin-top: 5px;
+    resize: none;
+    width: 800px;
+    height: 80px;
+}
+
+.item button{
+    margin-left: 723px;
+    font-size: 17px;
+
+}
