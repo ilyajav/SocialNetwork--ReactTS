@@ -2,21 +2,20 @@ import React from "react";
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 
-// export type postData = {
-//     message: string
-//     likesCount: number
-// }
-// const postDataUser1: Array<postData> = [
-//     {message : 'How are you?', likesCount : 5 },
-// ]
 
-// const postDataUser2: Array<postData> = [
-//     {message : 'Good day', likesCount :10}
-// ]
+export type PostsType = {
+    message: string,
+    likesCount: number
+}
 
-
+const posts: Array<PostsType> = [
+    {message: 'How are you?', likesCount: 5},
+    {message: 'Good day', likesCount: 10},
+    {message: 'New York', likesCount: 6}
+]
 
 export const MyPosts = () => {
+    let post = posts.map(data => <Post postInfo={data}/>)
     return (
         <div>
             <div className={s.item}>
@@ -31,12 +30,8 @@ export const MyPosts = () => {
                 </div>
             </div>
             <div>
-                <Post message='How are you?' likesCount={5}/>
-                <Post message='Good day' likesCount={10}/>
+                {post}
             </div>
         </div>
     )
 }
-
-//message='How are you?' likesCount={5}
-//message='Good day' likesCount={10}

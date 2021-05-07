@@ -1,22 +1,20 @@
 import React from "react";
 import s from './Post.module.css'
-//import {postData} from "../MyPosts";
+import {PostsType} from "../MyPosts";
 
 type PostPropsType = {
-    message: string
-    likesCount: number
-    //data: Array<postData>
+    postInfo: PostsType
 }
 
-export const Post = (props: PostPropsType) => {
+export const Post: React.FC<PostPropsType> = (props) => {
     return (
         <div className={s.item}>
             <div>
-                <img src='https://w7.pngwing.com/pngs/627/693/png-transparent-computer-icons-user-user-icon.png'/>
-                {props.message}
+                <img alt='mainPicture' src='https://w7.pngwing.com/pngs/627/693/png-transparent-computer-icons-user-user-icon.png'/>
+                {props.postInfo.message}
             </div>
             <div>
-                <span>like {props.likesCount}</span>
+                <span>like {props.postInfo.likesCount}</span>
             </div>
         </div>
     )
