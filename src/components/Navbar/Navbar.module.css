@@ -13,3 +13,14 @@
 .nav a.active{
     color: gold;
 }
+
+.item{
+    margin-top: 30px;
+    color: white;
+}
+
+.item img{
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+}
