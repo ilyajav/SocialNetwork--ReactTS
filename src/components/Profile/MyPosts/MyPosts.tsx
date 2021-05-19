@@ -1,15 +1,27 @@
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {FC} from "react";
-import {PostsType} from "../../../redux/state";
-
+import {ChangeEvent, createRef, FC} from "react";
+import {ProfileDataType} from "../../../redux/state";
 
 type MyPostsTypeProps = {
-    data: PostsType[]
+    data: ProfileDataType
+    addPost: () => void;
+    changePost: (newText: string) => void;
 }
 
-export const MyPosts: FC<MyPostsTypeProps> = ({data}) => {
-    const post = data.map(data => <Post postInfo={data} />)
+export const MyPosts: FC<MyPostsTypeProps> = ({data, addPost, changePost}) => {
+
+    const post = data.posts.map(data => <Post postInfo={data} key={data.id} />)
+    const textareaRef = createRef<HTMLTextAreaElement>();
+
+    const onAddPosts = () => {
+        addPost()
+    }
+
+    const onChangeTextAreaText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        changePost(e.currentTarget.value)
+    }
+
     return (
         <div>
             <div className={s.item}>
@@ -17,9 +29,9 @@ export const MyPosts: FC<MyPostsTypeProps> = ({data}) => {
                     <span>My posts</span>
                 </div>
                 <div className={s.newPost}>
-                    <textarea/>
+                    <textarea ref={textareaRef} value={data.newProfileMessageText} onChange={onChangeTextAreaText}/>
                     <div>
-                        <button>Add post</button>
+                        <button onClick={onAddPosts}>Add post</button>
                     </div>
                 </div>
             </div>

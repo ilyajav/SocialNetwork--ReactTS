@@ -2,3 +2,18 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+.itemRepeat{
+    margin-top: 30px;
+    margin-left: 650px;
+}
+
+.itemRepeat textarea{
+    resize: none;
+}
+
+.itemRepeat button{
+    margin-left: 103px;
+}
+
+

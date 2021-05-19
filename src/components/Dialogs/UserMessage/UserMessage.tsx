@@ -2,7 +2,6 @@ import {FC} from "react";
 import {UsersMessagesType} from "../../../redux/state";
 
 
-
 type UserMessageTypeProps = {
     userMessage: UsersMessagesType;
 }
