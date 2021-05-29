@@ -37,7 +37,7 @@ export const Dialogs: FC<DialogsTypeProps> = ({dialogData, addMessage, changeMes
             </div>
             <div className={s.itemRepeat}>
                 <div>
-                    <textarea ref={textAreaRef} onChange={onChangeMessage}/>
+                    <textarea ref={textAreaRef} value={dialogData.newDialogMessage} onChange={onChangeMessage}/>
                 </div>
                 <div>
                     <button onClick={onAddNewMessage}> Repeat</button>

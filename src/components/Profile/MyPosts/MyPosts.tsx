@@ -17,8 +17,9 @@ export const MyPosts: FC<MyPostsTypeProps> = ({data, addPost, changePost}) => {
     const onAddPosts = () => {
         addPost()
     }
-
+   debugger
     const onChangeTextAreaText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        debugger
         changePost(e.currentTarget.value)
     }
 

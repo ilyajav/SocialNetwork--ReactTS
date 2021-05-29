@@ -8,35 +8,31 @@ import {Route} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {RootStateType} from "./redux/state";
+import {StoreType} from "./redux/state";
 
 
 type AppTypeProps = {
-    appState: RootStateType;
-    addProfilePost: () => void;
-    changeProfilePost: (newTest: string) => void;
-    addDialogMessage: () => void;
-    changeDialogMessage: (newMessage: string) => void;
+    appStore: StoreType;
 }
 
-export const App: FC<AppTypeProps> = ({appState, addProfilePost, changeProfilePost, addDialogMessage, changeDialogMessage}) => {
+export const App: FC<AppTypeProps> = ({appStore}) => {
     return (
         <div className='app-wrapper'>
             <Header/>
-            <Navbar friendsData={appState.sidebarData.friends}/>
+            <Navbar friendsData={appStore.state.sidebarData.friends}/>
             <div className='app-wrapper-content'>
-                <Route path={'/profile'} render={() => <Profile postsData={appState.profileData}
-                                                                addPost={addProfilePost}
-                                                                changePost={changeProfilePost}
+                <Route path={'/profile'} render={() => <Profile postsData={appStore.state.profileData}
+                                                                addPost={appStore.addProfilePost.bind(appStore)}
+                                                                changePost={appStore.changeProfilePost.bind(appStore)}
                 />}/>
-                <Route path={'/dialogs'} render={() => <Dialogs dialogData={appState.dialogData}
-                                                                addMessage={addDialogMessage}
-                                                                changeMessage={changeDialogMessage}
+                <Route path={'/dialogs'} render={() => <Dialogs dialogData={appStore.state.dialogData}
+                                                                addMessage={appStore.addDialogMessage.bind(appStore)}
+                                                                changeMessage={appStore.changeDialogMessage.bind(appStore)}
 
                 />}/>
-                <Route path={'/news'} render={() => <News />} />
-                <Route path={'/music'} render={() => <Music />} />
-                <Route path={'/settings'} render={() => <Settings />} />
+                <Route path={'/news'} render={() => <News/>}/>
+                <Route path={'/music'} render={() => <Music/>}/>
+                <Route path={'/settings'} render={() => <Settings/>}/>
             </div>
         </div>
     );
