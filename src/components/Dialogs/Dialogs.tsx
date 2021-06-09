@@ -2,29 +2,25 @@ import {ChangeEvent, createRef, FC} from "react";
 import s from './Dialogs.module.css'
 import {UserDialog} from "./UserDialog/UserDialog";
 import {UserMessage} from "./UserMessage/UserMessage";
-import {DialogDataType} from "../../redux/state";
+import {ActionTypes, DialogDataType} from "../../redux/state";
 
 
 type DialogsTypeProps = {
     dialogData: DialogDataType;
-    addMessage: () => void;
-    changeMessage: (newMessage: string) => void;
+    dispatch: (action: ActionTypes) => void;
 }
 
-export const Dialogs: FC<DialogsTypeProps> = ({dialogData, addMessage, changeMessage}) => {
+export const Dialogs: FC<DialogsTypeProps> = ({dialogData, dispatch}) => {
 
     const textAreaRef = createRef<HTMLTextAreaElement>();
 
-    const onAddNewMessage = () => {
-        addMessage();
-    }
-
+    const onAddNewMessage = () => dispatch({type: "ADD-DIALOG-MESSAGE"})
     const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        changeMessage(e.currentTarget.value)
+        dispatch({type: "CHANGE-DIALOG-MESSAGE", newMessage: e.currentTarget.value})
     }
 
-    const users = dialogData.usersInfo.map(data => <UserDialog user={data} key={data.id} />)
-    const userMessage = dialogData.usersMessages.map(data => <UserMessage userMessage={data} key={data.id} />)
+    const users = dialogData.usersInfo.map(data => <UserDialog user={data} key={data.id}/>)
+    const userMessage = dialogData.usersMessages.map(data => <UserMessage userMessage={data} key={data.id}/>)
     return (
         <div>
             <div className={s.item}>

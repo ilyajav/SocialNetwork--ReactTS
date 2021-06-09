@@ -8,26 +8,28 @@ import {Route} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {StoreType} from "./redux/state";
+import {ActionTypes, RootStateType} from "./redux/state";
 
 
 type AppTypeProps = {
-    appStore: StoreType;
+    state: RootStateType;
+    dispatch: (action: ActionTypes) => void;
 }
 
-export const App: FC<AppTypeProps> = ({appStore}) => {
+export const App: FC<AppTypeProps> = ({state, dispatch}) => {
     return (
         <div className='app-wrapper'>
             <Header/>
-            <Navbar friendsData={appStore.state.sidebarData.friends}/>
+            <Navbar friendsData={state.sidebarData.friends}/>
             <div className='app-wrapper-content'>
-                <Route path={'/profile'} render={() => <Profile postsData={appStore.state.profileData}
-                                                                addPost={appStore.addProfilePost.bind(appStore)}
-                                                                changePost={appStore.changeProfilePost.bind(appStore)}
+                <Route path={'/profile'} render={() => <Profile postsData={state.profileData}
+                                                                dispatch={dispatch}
+
+
                 />}/>
-                <Route path={'/dialogs'} render={() => <Dialogs dialogData={appStore.state.dialogData}
-                                                                addMessage={appStore.addDialogMessage.bind(appStore)}
-                                                                changeMessage={appStore.changeDialogMessage.bind(appStore)}
+                <Route path={'/dialogs'} render={() => <Dialogs dialogData={state.dialogData}
+                                                                dispatch={dispatch}
+
 
                 />}/>
                 <Route path={'/news'} render={() => <News/>}/>

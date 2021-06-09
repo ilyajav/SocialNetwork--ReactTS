@@ -1,26 +1,22 @@
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {ChangeEvent, createRef, FC} from "react";
-import {ProfileDataType} from "../../../redux/state";
+import {ActionTypes, ProfileDataType} from "../../../redux/state";
 
 type MyPostsTypeProps = {
     data: ProfileDataType
-    addPost: () => void;
-    changePost: (newText: string) => void;
+    dispatch: (action: ActionTypes) => void;
 }
 
-export const MyPosts: FC<MyPostsTypeProps> = ({data, addPost, changePost}) => {
+export const MyPosts: FC<MyPostsTypeProps> = ({data, dispatch}) => {
 
-    const post = data.posts.map(data => <Post postInfo={data} key={data.id} />)
+    const post = data.posts.map(data => <Post postInfo={data} key={data.id}/>)
+
     const textareaRef = createRef<HTMLTextAreaElement>();
 
-    const onAddPosts = () => {
-        addPost()
-    }
-   debugger
+    const onAddPosts = () => dispatch({type: "ADD-PROFILE-POST"})
     const onChangeTextAreaText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        debugger
-        changePost(e.currentTarget.value)
+        dispatch({type: "CHANGE-PROFILE-POST", newText: e.currentTarget.value})
     }
 
     return (

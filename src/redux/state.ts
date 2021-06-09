@@ -1,9 +1,5 @@
 import {v1} from "uuid";
 
-let render = () =>{
-    console.log('render')
-}
-
 export type PostsType = {
     id: string;
     message: string;
@@ -39,24 +35,42 @@ type SidebarDataType = {
     friends: FriendsType[];
 }
 
-type RootStateType = {
+export type RootStateType = {
     dialogData: DialogDataType;
     profileData: ProfileDataType;
     sidebarData: SidebarDataType;
 }
 
-export type StoreType = {
-    state: RootStateType
-    addProfilePost: () => void;
-    changeProfilePost: (newText: string) => void;
-    addDialogMessage: () => void;
-    changeDialogMessage: (newMessage: string) => void;
-    render: () => void;
+type StoreType = {
+    _state: RootStateType
+    _callRender: () => void;
     subscriber: (observer: () => void) => void;
+    getState: () => RootStateType;
+    dispatch: (action: any) => void;
 }
 
+type AddProfilePostType = {
+    type: 'ADD-PROFILE-POST';
+}
+
+type ChangeProfilePostType = {
+    type: 'CHANGE-PROFILE-POST';
+    newText: string;
+}
+
+type AddDialogMessageType = {
+    type: 'ADD-DIALOG-MESSAGE';
+}
+
+type ChangeDialogMessageType = {
+    type: 'CHANGE-DIALOG-MESSAGE';
+    newMessage: string;
+}
+
+export type ActionTypes = AddProfilePostType | ChangeProfilePostType | ChangeDialogMessageType | AddDialogMessageType
+
 export const store: StoreType = {
-    state: {
+    _state: {
         dialogData: {
             usersInfo: [
                 {id: v1(), name: 'Ilya'},
@@ -90,38 +104,38 @@ export const store: StoreType = {
             ]
         }
     },
-    addProfilePost (){
-        const newPost: PostsType = {
-            id: v1(),
-            message: this.state.profileData.newProfileMessageText,
-            likesCount: 7,
-        }
-        this.state.profileData.posts.push(newPost)
-        this.state.profileData.newProfileMessageText = ''
-        render();
-    },
-    changeProfilePost(newText: string){
-        debugger
-        this.state.profileData.newProfileMessageText = newText;
-        render()
-    },
-    addDialogMessage(){
-        const newMessage: UsersMessagesType = {
-            id: v1(),
-            message: this.state.dialogData.newDialogMessage
-        }
-        this.state.dialogData.usersMessages.push(newMessage);
-        this.state.dialogData.newDialogMessage = '';
-        render();
-    },
-    changeDialogMessage(newMessage: string){
-        this.state.dialogData.newDialogMessage = newMessage;
-        render();
-    },
-    render(){
-        console.log('render')
-    },
+
+    _callRender(){},
     subscriber(observer: () => void){
-        render = observer
+        this._callRender = observer
+    },
+    getState(){
+        return this._state
+    },
+    dispatch(action: ActionTypes){
+        if(action.type === 'ADD-PROFILE-POST'){
+            const newPost: PostsType = {
+                id: v1(),
+                message: this._state.profileData.newProfileMessageText,
+                likesCount: 7,
+            }
+            this._state.profileData.posts.push(newPost)
+            this._state.profileData.newProfileMessageText = ''
+            this._callRender();
+        }else if(action.type === 'CHANGE-PROFILE-POST'){
+            this._state.profileData.newProfileMessageText = action.newText;
+            this._callRender()
+        }else if(action.type === 'ADD-DIALOG-MESSAGE'){
+            const newMessage: UsersMessagesType = {
+                id: v1(),
+                message: this._state.dialogData.newDialogMessage
+            }
+            this._state.dialogData.usersMessages.push(newMessage);
+            this._state.dialogData.newDialogMessage = '';
+            this._callRender();
+        }else if(action.type === 'CHANGE-DIALOG-MESSAGE'){
+            this._state.dialogData.newDialogMessage = action.newMessage;
+            this._callRender();
+        }
     }
 }

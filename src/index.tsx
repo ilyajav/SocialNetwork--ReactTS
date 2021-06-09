@@ -2,17 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {App} from './App';
-import {store}
-from "./redux/state";
+import {store} from "./redux/state";
 import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 
 
-export const renderTree = () =>{
+export const renderTree = () => {
     ReactDOM.render(
         <BrowserRouter>
             <React.StrictMode>
-                <App appStore={store} />
+                <App
+                    state={store.getState()}
+                    dispatch={store.dispatch.bind(store)}
+                />
             </React.StrictMode>
         </BrowserRouter>,
         document.getElementById('root')
