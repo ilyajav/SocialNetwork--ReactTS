@@ -2,6 +2,7 @@ import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {ChangeEvent, createRef, FC} from "react";
 import {ActionTypes, ProfileDataType} from "../../../redux/state";
+import {addPostActionCreator, changeProfilePostActionCreator} from "../../../redux/profile-reducer";
 
 type MyPostsTypeProps = {
     data: ProfileDataType
@@ -14,9 +15,9 @@ export const MyPosts: FC<MyPostsTypeProps> = ({data, dispatch}) => {
 
     const textareaRef = createRef<HTMLTextAreaElement>();
 
-    const onAddPosts = () => dispatch({type: "ADD-PROFILE-POST"})
+    const onAddPosts = () => dispatch(addPostActionCreator())
     const onChangeTextAreaText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch({type: "CHANGE-PROFILE-POST", newText: e.currentTarget.value})
+        dispatch(changeProfilePostActionCreator(e.currentTarget.value))
     }
 
     return (
@@ -26,7 +27,8 @@ export const MyPosts: FC<MyPostsTypeProps> = ({data, dispatch}) => {
                     <span>My posts</span>
                 </div>
                 <div className={s.newPost}>
-                    <textarea ref={textareaRef} value={data.newProfileMessageText} onChange={onChangeTextAreaText}/>
+                    <textarea placeholder='Enter your message this' ref={textareaRef} value={data.newProfileMessageText}
+                              onChange={onChangeTextAreaText}/>
                     <div>
                         <button onClick={onAddPosts}>Add post</button>
                     </div>

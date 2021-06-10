@@ -3,7 +3,7 @@ import s from './Dialogs.module.css'
 import {UserDialog} from "./UserDialog/UserDialog";
 import {UserMessage} from "./UserMessage/UserMessage";
 import {ActionTypes, DialogDataType} from "../../redux/state";
-
+import {addDialogMessageActionCreator, changeDialogMessageActionCreator} from "../../redux/dialog-reducer";
 
 type DialogsTypeProps = {
     dialogData: DialogDataType;
@@ -14,9 +14,9 @@ export const Dialogs: FC<DialogsTypeProps> = ({dialogData, dispatch}) => {
 
     const textAreaRef = createRef<HTMLTextAreaElement>();
 
-    const onAddNewMessage = () => dispatch({type: "ADD-DIALOG-MESSAGE"})
+    const onAddNewMessage = () => dispatch(addDialogMessageActionCreator())
     const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch({type: "CHANGE-DIALOG-MESSAGE", newMessage: e.currentTarget.value})
+        dispatch(changeDialogMessageActionCreator(e.currentTarget.value))
     }
 
     const users = dialogData.usersInfo.map(data => <UserDialog user={data} key={data.id}/>)
@@ -33,10 +33,10 @@ export const Dialogs: FC<DialogsTypeProps> = ({dialogData, dispatch}) => {
             </div>
             <div className={s.itemRepeat}>
                 <div>
-                    <textarea ref={textAreaRef} value={dialogData.newDialogMessage} onChange={onChangeMessage}/>
+                    <textarea placeholder='Repeat' ref={textAreaRef} value={dialogData.newDialogMessage} onChange={onChangeMessage}/>
                 </div>
                 <div>
-                    <button onClick={onAddNewMessage}> Repeat</button>
+                    <button onClick={onAddNewMessage}>Repeat</button>
                 </div>
             </div>
         </div>

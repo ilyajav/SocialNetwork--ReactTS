@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {addPostActionCreator, changeProfilePostActionCreator, profileReducer} from "./profile-reducer";
+import {addDialogMessageActionCreator, changeDialogMessageActionCreator, dialogReducer} from "./dialog-reducer";
 
 export type PostsType = {
     id: string;
@@ -27,7 +29,7 @@ export type DialogDataType = {
     newDialogMessage: string;
 }
 
-export type FriendsType ={
+export type FriendsType = {
     name: string;
 }
 
@@ -46,28 +48,15 @@ type StoreType = {
     _callRender: () => void;
     subscriber: (observer: () => void) => void;
     getState: () => RootStateType;
-    dispatch: (action: any) => void;
+    dispatch: (action: ActionTypes) => void;
 }
 
-type AddProfilePostType = {
-    type: 'ADD-PROFILE-POST';
-}
+export type ActionTypes =
+    ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof changeProfilePostActionCreator>
+    | ReturnType<typeof addDialogMessageActionCreator>
+    |ReturnType<typeof changeDialogMessageActionCreator>
 
-type ChangeProfilePostType = {
-    type: 'CHANGE-PROFILE-POST';
-    newText: string;
-}
-
-type AddDialogMessageType = {
-    type: 'ADD-DIALOG-MESSAGE';
-}
-
-type ChangeDialogMessageType = {
-    type: 'CHANGE-DIALOG-MESSAGE';
-    newMessage: string;
-}
-
-export type ActionTypes = AddProfilePostType | ChangeProfilePostType | ChangeDialogMessageType | AddDialogMessageType
 
 export const store: StoreType = {
     _state: {
@@ -104,38 +93,18 @@ export const store: StoreType = {
             ]
         }
     },
-
-    _callRender(){},
-    subscriber(observer: () => void){
+    _callRender() {
+    },
+    subscriber(observer: () => void) {
         this._callRender = observer
     },
-    getState(){
+    getState() {
         return this._state
     },
-    dispatch(action: ActionTypes){
-        if(action.type === 'ADD-PROFILE-POST'){
-            const newPost: PostsType = {
-                id: v1(),
-                message: this._state.profileData.newProfileMessageText,
-                likesCount: 7,
-            }
-            this._state.profileData.posts.push(newPost)
-            this._state.profileData.newProfileMessageText = ''
-            this._callRender();
-        }else if(action.type === 'CHANGE-PROFILE-POST'){
-            this._state.profileData.newProfileMessageText = action.newText;
-            this._callRender()
-        }else if(action.type === 'ADD-DIALOG-MESSAGE'){
-            const newMessage: UsersMessagesType = {
-                id: v1(),
-                message: this._state.dialogData.newDialogMessage
-            }
-            this._state.dialogData.usersMessages.push(newMessage);
-            this._state.dialogData.newDialogMessage = '';
-            this._callRender();
-        }else if(action.type === 'CHANGE-DIALOG-MESSAGE'){
-            this._state.dialogData.newDialogMessage = action.newMessage;
-            this._callRender();
+    dispatch(action: ActionTypes) {
+        this._state.profileData = profileReducer( this._state.profileData, action)
+        this._state.dialogData = dialogReducer(this._state.dialogData, action)
+        this._callRender()
+
         }
     }
-}
