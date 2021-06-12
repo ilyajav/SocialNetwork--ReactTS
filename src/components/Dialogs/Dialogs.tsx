@@ -2,25 +2,34 @@ import {ChangeEvent, createRef, FC} from "react";
 import s from './Dialogs.module.css'
 import {UserDialog} from "./UserDialog/UserDialog";
 import {UserMessage} from "./UserMessage/UserMessage";
-import {ActionTypes, DialogDataType} from "../../redux/state";
-import {addDialogMessageActionCreator, changeDialogMessageActionCreator} from "../../redux/dialog-reducer";
+import {UsersDataType, UsersMessagesType} from "../../redux/dialog-reducer";
 
 type DialogsTypeProps = {
-    dialogData: DialogDataType;
-    dispatch: (action: ActionTypes) => void;
+    addNewMessage: () => void;
+    changeMessage: (text: string) => void;
+    usersInfo: UsersDataType[];
+    usersMessages: UsersMessagesType[];
+    newDialogMessage: string
 }
 
-export const Dialogs: FC<DialogsTypeProps> = ({dialogData, dispatch}) => {
+export const Dialogs: FC<DialogsTypeProps> = ({
+                                                  addNewMessage,
+                                                  changeMessage,
+                                                  usersMessages,
+                                                  usersInfo,
+                                                  newDialogMessage
+                                              }) => {
 
     const textAreaRef = createRef<HTMLTextAreaElement>();
 
-    const onAddNewMessage = () => dispatch(addDialogMessageActionCreator())
+    const onAddNewMessage = () => addNewMessage()
     const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(changeDialogMessageActionCreator(e.currentTarget.value))
+        changeMessage(e.currentTarget.value)
     }
 
-    const users = dialogData.usersInfo.map(data => <UserDialog user={data} key={data.id}/>)
-    const userMessage = dialogData.usersMessages.map(data => <UserMessage userMessage={data} key={data.id}/>)
+    const users = usersInfo.map(data => <UserDialog user={data} key={data.id}/>)
+    const userMessage = usersMessages.map(data => <UserMessage userMessage={data} key={data.id}/>)
+
     return (
         <div>
             <div className={s.item}>
@@ -33,7 +42,8 @@ export const Dialogs: FC<DialogsTypeProps> = ({dialogData, dispatch}) => {
             </div>
             <div className={s.itemRepeat}>
                 <div>
-                    <textarea placeholder='Repeat' ref={textAreaRef} value={dialogData.newDialogMessage} onChange={onChangeMessage}/>
+                    <textarea placeholder='Repeat' ref={textAreaRef} value={newDialogMessage}
+                              onChange={onChangeMessage}/>
                 </div>
                 <div>
                     <button onClick={onAddNewMessage}>Repeat</button>

@@ -1,12 +1,12 @@
 import {FC} from "react";
 import s from './Navbar.module.css'
 import {FriendsList} from "./FriendsList/FriendsList";
-import {FriendsType} from "../../redux/state";
+import {FriendsDataType} from "../../redux/sidebar-reducer";
 import {Navigation} from "./Navigation/Navigation";
 
 
 type NavbarPropsType = {
-    friendsData: FriendsType[];
+    friendsData: FriendsDataType[];
 }
 
 export const Navbar: FC<NavbarPropsType> = ({friendsData}) => {

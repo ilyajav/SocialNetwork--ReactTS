@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {NavLink} from "react-router-dom";
-import {UsersDataType} from "../../../redux/state";
+import {UsersDataType} from "../../../redux/dialog-reducer";
 
 
 type UserDialogTypeProps = {

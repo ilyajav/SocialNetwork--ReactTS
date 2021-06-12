@@ -1,9 +1,8 @@
-import s from './FriendList.module.css'
 import {FC} from "react";
-import {FriendsType} from "../../../redux/state";
+import {FriendsDataType} from "../../../redux/sidebar-reducer";
 
 type FriendsListPropsType = {
-    friendName: FriendsType
+    friendName: FriendsDataType
 }
 
 export const FriendsList: FC<FriendsListPropsType> = ({friendName}) => {

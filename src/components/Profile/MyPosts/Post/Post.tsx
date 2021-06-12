@@ -1,9 +1,8 @@
 import {FC} from "react";
 import s from './Post.module.css'
-import {PostsType} from "../../../../redux/state";
 
 type PostPropsType = {
-    postInfo: PostsType;
+    postInfo: any;
 }
 
 export const Post: FC<PostPropsType> = ({postInfo}) => {
