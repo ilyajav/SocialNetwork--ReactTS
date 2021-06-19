@@ -2,22 +2,18 @@ import {ChangeEvent, createRef, FC} from "react";
 import s from './Dialogs.module.css'
 import {UserDialog} from "./UserDialog/UserDialog";
 import {UserMessage} from "./UserMessage/UserMessage";
-import {UsersDataType, UsersMessagesType} from "../../redux/dialog-reducer";
+import {DialogDataType} from "../../redux/dialog-reducer";
 
 type DialogsTypeProps = {
     addNewMessage: () => void;
     changeMessage: (text: string) => void;
-    usersInfo: UsersDataType[];
-    usersMessages: UsersMessagesType[];
-    newDialogMessage: string
+    dialogData: DialogDataType
 }
 
 export const Dialogs: FC<DialogsTypeProps> = ({
                                                   addNewMessage,
                                                   changeMessage,
-                                                  usersMessages,
-                                                  usersInfo,
-                                                  newDialogMessage
+                                                  dialogData
                                               }) => {
 
     const textAreaRef = createRef<HTMLTextAreaElement>();
@@ -27,8 +23,8 @@ export const Dialogs: FC<DialogsTypeProps> = ({
         changeMessage(e.currentTarget.value)
     }
 
-    const users = usersInfo.map(data => <UserDialog user={data} key={data.id}/>)
-    const userMessage = usersMessages.map(data => <UserMessage userMessage={data} key={data.id}/>)
+    const users = dialogData.usersInfo.map(data => <UserDialog user={data} key={data.id}/>)
+    const userMessage = dialogData.usersMessages.map(data => <UserMessage userMessage={data} key={data.id}/>)
 
     return (
         <div>
@@ -42,7 +38,7 @@ export const Dialogs: FC<DialogsTypeProps> = ({
             </div>
             <div className={s.itemRepeat}>
                 <div>
-                    <textarea placeholder='Repeat' ref={textAreaRef} value={newDialogMessage}
+                    <textarea placeholder='Repeat' ref={textAreaRef} value={dialogData.newDialogMessage}
                               onChange={onChangeMessage}/>
                 </div>
                 <div>

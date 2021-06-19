@@ -11,10 +11,7 @@ export type PostsType = {
     likesCount: number;
 }
 
-export type ProfileDataType = {
-    posts: PostsType[];
-    newProfileMessageText: string;
-}
+export type ProfileDataType = typeof initialState
 
 const initialState = {
         posts: [
@@ -25,7 +22,11 @@ const initialState = {
         newProfileMessageText: ''
 }
 
-export const profileReducer = (state: ProfileDataType = initialState, action: ActionProfileTypes) => {
+export const profileReducer = (state: ProfileDataType = initialState, action: ActionProfileTypes): ProfileDataType => {
+    const stateCopy = {
+        ...state,
+        posts: [...state.posts]
+    }
     switch (action.type) {
         case ADD_PROFILE_POST:
             const newPost: PostsType = {
@@ -33,12 +34,12 @@ export const profileReducer = (state: ProfileDataType = initialState, action: Ac
                 message: state.newProfileMessageText,
                 likesCount: 7,
             }
-            state.posts.push(newPost)
-            state.newProfileMessageText = ''
-            return state
+            stateCopy.posts.push(newPost)
+            stateCopy.newProfileMessageText = ''
+            return stateCopy
         case CHANGE_PROFILE_POST:
-            state.newProfileMessageText = action.newText;
-            return state;
+            stateCopy.newProfileMessageText = action.newText;
+            return stateCopy;
         default:
             return state
     }

@@ -1,18 +1,17 @@
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {ChangeEvent, createRef, FC} from "react";
-import {PostsType} from "../../../redux/profile-reducer";
+import {ProfileDataType} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
    addPost: () => void;
    changePostText: (text: string) => void;
-   posts:  PostsType[];
-   newText: string;
+   postsData: ProfileDataType
 }
 
-export const MyPosts: FC<MyPostsPropsType> = ({addPost, changePostText, posts, newText}) => {
+export const MyPosts: FC<MyPostsPropsType> = ({addPost, changePostText, postsData}) => {
 
-    const post = posts.map(post => <Post postInfo={post} key={post.id}/>)
+    const post = postsData.posts.map(post => <Post postInfo={post} key={post.id}/>)
 
     const textareaRef = createRef<HTMLTextAreaElement>();
 
@@ -28,7 +27,7 @@ export const MyPosts: FC<MyPostsPropsType> = ({addPost, changePostText, posts, n
                     <span>My posts</span>
                 </div>
                 <div className={s.newPost}>
-                    <textarea placeholder='Enter your message this' ref={textareaRef} value={newText}
+                    <textarea placeholder='Enter your message this' ref={textareaRef} value={postsData.newProfileMessageText}
                               onChange={onChangeTextAreaText}/>
                     <div>
                         <button onClick={onAddPosts}>Add post</button>

@@ -1,11 +1,8 @@
-export type SidebarDataType = {
-    friends: FriendsDataType[];
-}
+export type SidebarDataType = typeof initialState
 
 export type FriendsDataType = {
     name: string;
 }
-
 
 const initialState = {
     friends: [
@@ -15,7 +12,6 @@ const initialState = {
     ]
 }
 
-export const sidebarReducer = (state: SidebarDataType = initialState, action: any) => {
-
+export const sidebarReducer = (state: SidebarDataType = initialState): SidebarDataType  => {
     return state
 }

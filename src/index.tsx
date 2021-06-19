@@ -5,16 +5,16 @@ import {App} from './App';
 import {store} from './redux/redux-store'
 import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import {StoreContext} from "./StoreContext";
+import {Provider} from "react-redux";
 
 export const renderTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <StoreContext.Provider value={store}>
+            <Provider store={store}>
             <React.StrictMode>
                 <App />
             </React.StrictMode>
-            </StoreContext.Provider>
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );

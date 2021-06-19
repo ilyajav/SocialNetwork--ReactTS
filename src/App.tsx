@@ -15,7 +15,7 @@ type AppTypeProps = {}
 export const App: FC<AppTypeProps> = () => {
     return (
         <div className='app-wrapper'>
-            <Header/>
+            <Header />
             <NavbarContainer />
             <div className='app-wrapper-content'>
                 <Route path={'/profile'} render={() => <Profile />}/>

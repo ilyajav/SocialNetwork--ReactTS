@@ -13,11 +13,7 @@ export type UsersMessagesType = {
     message: string;
 }
 
-export type DialogDataType = {
-    usersInfo: UsersDataType[];
-    usersMessages: UsersMessagesType[];
-    newDialogMessage: string;
-}
+export type DialogDataType = typeof initialState
 
 const ADD_DIALOG_MESSAGE = 'ADD-DIALOG-MESSAGE'
 const CHANGE_DIALOG_MESSAGE = 'CHANGE-DIALOG-MESSAGE'
@@ -41,19 +37,24 @@ const initialState = {
     newDialogMessage: ''
 }
 
-export const dialogReducer = (state: DialogDataType = initialState , action: ActionDialogsTypes) =>{
+export const dialogReducer = (state: DialogDataType = initialState , action: ActionDialogsTypes): DialogDataType =>{
+    const stateCopy = {
+        ...state,
+        usersInfo: [...state.usersInfo],
+        usersMessages: [...state.usersMessages]
+    }
     switch (action.type){
         case ADD_DIALOG_MESSAGE:
             const newMessage: UsersMessagesType = {
                 id: v1(),
                 message: state.newDialogMessage
             }
-            state.usersMessages.push(newMessage);
-            state.newDialogMessage = '';
-            return state
+            stateCopy.usersMessages.push(newMessage);
+            stateCopy.newDialogMessage = '';
+            return stateCopy
         case CHANGE_DIALOG_MESSAGE:
-            state.newDialogMessage = action.newMessage;
-            return state;
+            stateCopy.newDialogMessage = action.newMessage;
+            return stateCopy;
         default:
             return state
     }
