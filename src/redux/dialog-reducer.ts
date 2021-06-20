@@ -38,23 +38,22 @@ const initialState = {
 }
 
 export const dialogReducer = (state: DialogDataType = initialState , action: ActionDialogsTypes): DialogDataType =>{
-    const stateCopy = {
-        ...state,
-        usersInfo: [...state.usersInfo],
-        usersMessages: [...state.usersMessages]
-    }
     switch (action.type){
         case ADD_DIALOG_MESSAGE:
             const newMessage: UsersMessagesType = {
                 id: v1(),
                 message: state.newDialogMessage
             }
-            stateCopy.usersMessages.push(newMessage);
-            stateCopy.newDialogMessage = '';
-            return stateCopy
+            return {
+                ...state,
+                usersMessages: [...state.usersMessages, newMessage],
+                newDialogMessage: ''
+            }
         case CHANGE_DIALOG_MESSAGE:
-            stateCopy.newDialogMessage = action.newMessage;
-            return stateCopy;
+            return {
+                ...state,
+                newDialogMessage: action.newMessage
+            }
         default:
             return state
     }
