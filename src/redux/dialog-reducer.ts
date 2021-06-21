@@ -1,14 +1,14 @@
 import {v1} from "uuid";
 
 
-export type ActionDialogsTypes = ReturnType<typeof addDialogMessageActionCreator>  | ReturnType<typeof changeDialogMessageActionCreator>
+export type ActionDialogsTypes = ReturnType<typeof addDialogMessageAC>  | ReturnType<typeof changeDialogMessageAC>
 
-export type UsersDataType = {
+export type DialogUsersDataType = {
     id: string;
     name: string;
 }
 
-export type UsersMessagesType = {
+export type DialogUsersMessagesType = {
     id: string;
     message: string;
 }
@@ -40,7 +40,7 @@ const initialState = {
 export const dialogReducer = (state: DialogDataType = initialState , action: ActionDialogsTypes): DialogDataType =>{
     switch (action.type){
         case ADD_DIALOG_MESSAGE:
-            const newMessage: UsersMessagesType = {
+            const newMessage: DialogUsersMessagesType = {
                 id: v1(),
                 message: state.newDialogMessage
             }
@@ -59,13 +59,13 @@ export const dialogReducer = (state: DialogDataType = initialState , action: Act
     }
     }
 
-export const addDialogMessageActionCreator = () => {
+export const addDialogMessageAC = () => {
     return {
         type: ADD_DIALOG_MESSAGE
     } as const
 }
 
-export const changeDialogMessageActionCreator = (newMessage: string) => {
+export const changeDialogMessageAC = (newMessage: string) => {
     return {
         type: CHANGE_DIALOG_MESSAGE,
         newMessage

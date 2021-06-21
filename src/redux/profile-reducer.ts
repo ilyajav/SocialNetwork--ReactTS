@@ -4,8 +4,8 @@ const ADD_PROFILE_POST = 'ADD-PROFILE-POST'
 const CHANGE_PROFILE_POST = 'CHANGE-PROFILE-POST'
 
 export type ActionProfileTypes =
-    ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof changeProfilePostActionCreator>
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof changeProfilePostAC>
 
 export type PostsType = {
     id: string;
@@ -33,9 +33,9 @@ export const profileReducer = (state: ProfileDataType = initialState, action: Ac
                 likesCount: 7,
             }
             return {
-                    ...state,
-                    posts: [...state.posts, newPost],
-                    newProfileMessageText: ''
+                ...state,
+                posts: [...state.posts, newPost],
+                newProfileMessageText: ''
             }
         case CHANGE_PROFILE_POST:
             return {
@@ -48,13 +48,13 @@ export const profileReducer = (state: ProfileDataType = initialState, action: Ac
 
 }
 
-export const addPostActionCreator = () => {
+export const addPostAC = () => {
     return {
         type: ADD_PROFILE_POST
     } as const
 }
 
-export const changeProfilePostActionCreator = (newText: string) => {
+export const changeProfilePostAC = (newText: string) => {
     return {
         type: CHANGE_PROFILE_POST,
         newText

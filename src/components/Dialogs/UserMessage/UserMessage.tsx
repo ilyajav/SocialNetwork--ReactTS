@@ -1,9 +1,9 @@
 import {FC} from "react";
-import {UsersMessagesType} from "../../../redux/dialog-reducer";
+import {DialogUsersMessagesType} from "../../../redux/dialog-reducer";
 
 
 type UserMessageTypeProps = {
-    userMessage: UsersMessagesType;
+    userMessage: DialogUsersMessagesType;
 }
 
 

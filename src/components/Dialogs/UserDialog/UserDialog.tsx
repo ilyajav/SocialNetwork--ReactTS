@@ -1,10 +1,10 @@
 import {FC} from "react";
 import {NavLink} from "react-router-dom";
-import {UsersDataType} from "../../../redux/dialog-reducer";
+import {DialogUsersDataType} from "../../../redux/dialog-reducer";
 
 
 type UserDialogTypeProps = {
-    user: UsersDataType;
+    user: DialogUsersDataType
 }
 
 export const UserDialog: FC<UserDialogTypeProps> = ({user}) => {

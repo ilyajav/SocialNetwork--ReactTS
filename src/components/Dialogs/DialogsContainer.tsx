@@ -1,6 +1,6 @@
 import {
-    addDialogMessageActionCreator,
-    changeDialogMessageActionCreator,
+    addDialogMessageAC,
+    changeDialogMessageAC,
     DialogDataType
 } from "../../redux/dialog-reducer";
 import {Dialogs} from "./Dialogs";
@@ -25,8 +25,8 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType =>{
 
 const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType =>{
       return{
-         addNewMessage: () => dispatch(addDialogMessageActionCreator()),
-         changeMessage: (text: string) => dispatch(changeDialogMessageActionCreator(text))
+         addNewMessage: () => dispatch(addDialogMessageAC()),
+         changeMessage: (text: string) => dispatch(changeDialogMessageAC(text))
       }
 }
 
