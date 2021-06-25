@@ -1,25 +1,32 @@
-import {v1} from "uuid";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
+const SET_USERS = 'SET-USERS'
 
-type ActionUsersType = ReturnType<typeof followAC> | ReturnType<typeof unFollowAC>
+type ActionUsersType = ReturnType<typeof followAC> | ReturnType<typeof unFollowAC> | ReturnType<typeof setUsersAC>
 export type UsersDataType = typeof initialState
 
-const initialState = {
-     users: [
-          {id: v1(), name: 'Ilya', followed: true, photo: 'https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png', location: {country: 'Russia', city: 'Moscow'}},
-          {id: v1(), name: 'Andrey', followed: false, photo: 'https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png', location: {country: 'Belarus', city: 'Minsk'}},
-          {id: v1(), name: 'Tom', followed: true, photo: 'https://www.pngkey.com/png/detail/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png', location: {country: 'USA', city: 'New-York'}}
-     ]
+
+export type UserType = {
+     name: string,
+     id: number,
+     photos: PhotosType
+     status: string,
+     followed: boolean
 }
 
-debugger
+type PhotosType = {
+     small: string
+     large: string
+}
+
+const initialState = {
+     users: [] as UserType[]
+}
+
 export const usersReducer = (state: UsersDataType = initialState, action: ActionUsersType): UsersDataType =>{
-     debugger
      switch (action.type){
           case FOLLOW:
-               debugger
                return {
                     ...state,
                     users: state.users.map(u => {
@@ -30,7 +37,6 @@ export const usersReducer = (state: UsersDataType = initialState, action: Action
                     })
                }
           case UNFOLLOW:
-               debugger
                return {
                     ...state,
                     users: state.users.map(u => {
@@ -40,21 +46,33 @@ export const usersReducer = (state: UsersDataType = initialState, action: Action
                          return u
                     })
                }
+          case SET_USERS: {
+               return {
+                    ...state, users: action.users
+               }
+          }
      }
      return state
 }
 
 
-export const followAC = (userID: string) =>{
+export const followAC = (userID: number) =>{
      return {
           type: FOLLOW,
           userID
-     }
+     } as const
 }
 
-export const unFollowAC = (userID: string) =>{
+export const unFollowAC = (userID: number) =>{
      return {
           type: UNFOLLOW,
           userID
-     }
+     } as const
+}
+
+export const setUsersAC = (users: UserType[]) =>{
+     return{
+          type: SET_USERS,
+          users
+     } as const
 }
