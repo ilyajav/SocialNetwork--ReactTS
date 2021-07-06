@@ -10,7 +10,6 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 
-
 type AppTypeProps = {}
 
 export const App: FC<AppTypeProps> = () => {
@@ -29,5 +28,3 @@ export const App: FC<AppTypeProps> = () => {
         </div>
     );
 }
-
-

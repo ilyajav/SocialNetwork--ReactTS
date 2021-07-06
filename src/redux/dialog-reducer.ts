@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 
 
-export type ActionDialogsTypes = ReturnType<typeof addDialogMessageAC>  | ReturnType<typeof changeDialogMessageAC>
+export type ActionDialogsTypes = ReturnType<typeof addDialogMessage>  | ReturnType<typeof changeDialogMessage>
 
 export type DialogUsersDataType = {
     id: string;
@@ -15,9 +15,10 @@ export type DialogUsersMessagesType = {
 
 export type DialogDataType = typeof initialState
 
-const ADD_DIALOG_MESSAGE = 'ADD-DIALOG-MESSAGE'
-const CHANGE_DIALOG_MESSAGE = 'CHANGE-DIALOG-MESSAGE'
-
+enum ACTION_TYPES {
+     ADD_DIALOG_MESSAGE = 'ADD-DIALOG-MESSAGE',
+     CHANGE_DIALOG_MESSAGE = 'CHANGE-DIALOG-MESSAGE',
+}
 
 const initialState = {
     usersInfo: [
@@ -39,7 +40,7 @@ const initialState = {
 
 export const dialogReducer = (state: DialogDataType = initialState , action: ActionDialogsTypes): DialogDataType =>{
     switch (action.type){
-        case ADD_DIALOG_MESSAGE:
+        case ACTION_TYPES.ADD_DIALOG_MESSAGE:
             const newMessage: DialogUsersMessagesType = {
                 id: v1(),
                 message: state.newDialogMessage
@@ -49,7 +50,7 @@ export const dialogReducer = (state: DialogDataType = initialState , action: Act
                 usersMessages: [...state.usersMessages, newMessage],
                 newDialogMessage: ''
             }
-        case CHANGE_DIALOG_MESSAGE:
+        case ACTION_TYPES.CHANGE_DIALOG_MESSAGE:
             return {
                 ...state,
                 newDialogMessage: action.newMessage
@@ -59,15 +60,15 @@ export const dialogReducer = (state: DialogDataType = initialState , action: Act
     }
     }
 
-export const addDialogMessageAC = () => {
+export const addDialogMessage = () => {
     return {
-        type: ADD_DIALOG_MESSAGE
+        type: ACTION_TYPES.ADD_DIALOG_MESSAGE,
     } as const
 }
 
-export const changeDialogMessageAC = (newMessage: string) => {
+export const changeDialogMessage = (newMessage: string) => {
     return {
-        type: CHANGE_DIALOG_MESSAGE,
-        newMessage
+        type: ACTION_TYPES.CHANGE_DIALOG_MESSAGE,
+        newMessage,
     } as const
 }

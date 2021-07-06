@@ -11,7 +11,7 @@ type mapDispatchToPropsType = {}
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return{
-        friendsData: state.sidebarData
+        friendsData: state.sidebarData,
     }
 }
 

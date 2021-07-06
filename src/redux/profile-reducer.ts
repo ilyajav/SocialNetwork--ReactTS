@@ -1,11 +1,14 @@
 import {v1} from "uuid";
 
-const ADD_PROFILE_POST = 'ADD-PROFILE-POST'
-const CHANGE_PROFILE_POST = 'CHANGE-PROFILE-POST'
+
+enum ACTION_TYPES{
+     ADD_PROFILE_POST = 'ADD-PROFILE-POST',
+     CHANGE_PROFILE_POST = 'CHANGE-PROFILE-POST',
+}
 
 export type ActionProfileTypes =
-    ReturnType<typeof addPostAC>
-    | ReturnType<typeof changeProfilePostAC>
+    ReturnType<typeof addPost>
+    | ReturnType<typeof changeProfilePost>
 
 export type PostsType = {
     id: string;
@@ -26,7 +29,7 @@ const initialState = {
 
 export const profileReducer = (state: ProfileDataType = initialState, action: ActionProfileTypes): ProfileDataType => {
     switch (action.type) {
-        case ADD_PROFILE_POST:
+        case ACTION_TYPES.ADD_PROFILE_POST:
             const newPost: PostsType = {
                 id: v1(),
                 message: state.newProfileMessageText,
@@ -37,7 +40,7 @@ export const profileReducer = (state: ProfileDataType = initialState, action: Ac
                 posts: [...state.posts, newPost],
                 newProfileMessageText: ''
             }
-        case CHANGE_PROFILE_POST:
+        case ACTION_TYPES.CHANGE_PROFILE_POST:
             return {
                 ...state,
                 newProfileMessageText: action.newText
@@ -48,15 +51,15 @@ export const profileReducer = (state: ProfileDataType = initialState, action: Ac
 
 }
 
-export const addPostAC = () => {
+export const addPost = () => {
     return {
-        type: ADD_PROFILE_POST
+        type: ACTION_TYPES.ADD_PROFILE_POST,
     } as const
 }
 
-export const changeProfilePostAC = (newText: string) => {
+export const changeProfilePost = (newText: string) => {
     return {
-        type: CHANGE_PROFILE_POST,
-        newText
+        type: ACTION_TYPES.CHANGE_PROFILE_POST,
+        newText,
     } as const
 }
