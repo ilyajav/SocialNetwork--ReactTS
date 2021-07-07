@@ -3,3 +3,14 @@
     width: 200px;
 }
 
+.selectedPage{
+    margin: 0 2px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.page{
+    margin: 0 2px;
+    font-size: 20px;
+}
+

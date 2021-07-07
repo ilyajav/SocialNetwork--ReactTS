@@ -1,4 +1,12 @@
-import {follow, setUsers, unFollow, UsersDataType, usersReducer} from "./users-reducer";
+import {
+    follow,
+    setCurrentPage,
+    setUsers,
+    setUsersTotalCount,
+    unFollow,
+    UsersDataType,
+    usersReducer
+} from "./users-reducer";
 
 
 let usersData: UsersDataType
@@ -8,7 +16,10 @@ beforeEach(() =>{
         users: [
             {name: 'Vlad', id: 1, photos: {small: 'sm', large: '23px'}, followed: false, status: 'ok'},
             {name: 'Elena', id: 2, photos: {small: 'sm', large: '25px'}, followed: true, status: 'ok'},
-        ]
+        ],
+        pageSize: 4,
+        totalUsersCount: 1,
+        currentPage: 2,
     }
 })
 
@@ -46,7 +57,10 @@ test('User must be added', () =>{
                 followed: false,
                 status: 'ok',
             }
-        ]
+        ],
+        pageSize: 4,
+        totalUsersCount: 1,
+        currentPage: 2,
     }
 
 
@@ -58,4 +72,20 @@ test('User must be added', () =>{
     expect(endState.users[0].followed).toBeTruthy()
     expect(endState.users[1].followed).toBeFalsy()
     expect(endState.users[0].photos.large).toBe('29px')
+})
+
+test('current page should be changed', ()=>{
+
+    const action = setCurrentPage(3)
+    const endState = usersReducer(usersData, action)
+
+    expect(endState.currentPage).toBe(3)
+})
+
+test('user total count should be changed', ()=>{
+
+    const action = setUsersTotalCount(50)
+    const endState = usersReducer(usersData, action)
+
+    expect(endState.totalUsersCount).toBe(50)
 })
