@@ -4,6 +4,7 @@ enum ACTION_TYPES {
     SET_USERS = 'SET-USERS',
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT',
+    SET_IS_FETCHING = 'SET_IS_FETCHING',
 }
 
 type ActionUsersType =
@@ -12,6 +13,7 @@ type ActionUsersType =
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setUsersTotalCount>
+    | ReturnType<typeof toggleIsFetching>
 
 export type UsersDataType = typeof initialState
 
@@ -33,6 +35,7 @@ const initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
+    isFetching: false,
 }
 
 export const usersReducer = (state: UsersDataType = initialState, action: ActionUsersType): UsersDataType => {
@@ -58,20 +61,23 @@ export const usersReducer = (state: UsersDataType = initialState, action: Action
                 })
             }
         case ACTION_TYPES.SET_USERS: {
-            debugger
             return {
                 ...state, users: action.users
             }
         }
         case ACTION_TYPES.SET_CURRENT_PAGE: {
-            debugger
             return {
                 ...state, currentPage: action.currentPage
             }
         }
         case ACTION_TYPES.SET_USERS_TOTAL_COUNT: {
             return {
-                ...state, totalUsersCount: action.totalUsersCount
+                ...state, totalUsersCount: action.totalUsersCount,
+            }
+        }
+        case ACTION_TYPES.SET_IS_FETCHING:{
+            return {
+                ...state, isFetching: action.isFetching
             }
         }
     }
@@ -94,7 +100,6 @@ export const unFollow = (userID: number) => {
 }
 
 export const setUsers = (users: UserType[]) => {
-    debugger
     return {
         type: ACTION_TYPES.SET_USERS,
         users,
@@ -112,5 +117,12 @@ export const setUsersTotalCount = (totalUsersCount: number) => {
     return {
         type: ACTION_TYPES.SET_USERS_TOTAL_COUNT,
         totalUsersCount,
+    } as const
+}
+
+export const toggleIsFetching = (isFetching: boolean) =>{
+    return{
+        type: ACTION_TYPES.SET_IS_FETCHING,
+        isFetching,
     } as const
 }

@@ -2,7 +2,7 @@ import {
     follow,
     setCurrentPage,
     setUsers,
-    setUsersTotalCount,
+    setUsersTotalCount, toggleIsFetching,
     unFollow,
     UsersDataType,
     usersReducer
@@ -20,6 +20,7 @@ beforeEach(() =>{
         pageSize: 4,
         totalUsersCount: 1,
         currentPage: 2,
+        isFetching: false,
     }
 })
 
@@ -61,6 +62,7 @@ test('User must be added', () =>{
         pageSize: 4,
         totalUsersCount: 1,
         currentPage: 2,
+        isFetching: false,
     }
 
 
@@ -88,4 +90,12 @@ test('user total count should be changed', ()=>{
     const endState = usersReducer(usersData, action)
 
     expect(endState.totalUsersCount).toBe(50)
+})
+
+test('preloader should be on', ()=>{
+
+    const action = toggleIsFetching(true)
+    const endState = usersReducer(usersData, action)
+
+    expect(endState.isFetching).toBeTruthy()
 })
