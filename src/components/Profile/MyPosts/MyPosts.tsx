@@ -5,11 +5,11 @@ import {ProfileDataType} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
    addPost: () => void;
-   changePostText: (text: string) => void;
+    changeProfilePost: (text: string) => void;
    postsData: ProfileDataType
 }
 
-export const MyPosts: FC<MyPostsPropsType> = ({addPost, changePostText, postsData}) => {
+export const MyPosts: FC<MyPostsPropsType> = ({addPost, changeProfilePost, postsData}) => {
 
     const post = postsData.posts.map(post => <Post postInfo={post} key={post.id}/>)
 
@@ -17,7 +17,7 @@ export const MyPosts: FC<MyPostsPropsType> = ({addPost, changePostText, postsDat
 
     const onAddPosts = () => addPost()
     const onChangeTextAreaText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        changePostText(e.currentTarget.value)
+        changeProfilePost(e.currentTarget.value)
     }
 
     return (

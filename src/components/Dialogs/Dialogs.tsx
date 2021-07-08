@@ -5,22 +5,22 @@ import {UserMessage} from "./UserMessage/UserMessage";
 import {DialogDataType} from "../../redux/dialog-reducer";
 
 type DialogsTypeProps = {
-    addNewMessage: () => void;
-    changeMessage: (text: string) => void;
+    addDialogMessage: () => void;
+    changeDialogMessage: (text: string) => void;
     dialogData: DialogDataType
 }
 
 export const Dialogs: FC<DialogsTypeProps> = ({
-                                                  addNewMessage,
-                                                  changeMessage,
+                                                  addDialogMessage,
+                                                  changeDialogMessage,
                                                   dialogData
                                               }) => {
 
     const textAreaRef = createRef<HTMLTextAreaElement>();
 
-    const onAddNewMessage = () => addNewMessage()
+    const onAddNewMessage = () => addDialogMessage()
     const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        changeMessage(e.currentTarget.value)
+        changeDialogMessage(e.currentTarget.value)
     }
 
     const users = dialogData.usersInfo.map(data => <UserDialog user={data} key={data.id}/>)

@@ -7,16 +7,10 @@ type mapStateToPropsType = {
     friendsData: SidebarDataType
 }
 
-type mapDispatchToPropsType = {}
-
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return{
         friendsData: state.sidebarData,
     }
 }
 
-const mapDispatchToProps = (): mapDispatchToPropsType =>{
-    return {}
-}
-
-export const NavbarContainer = connect(mapStateToProps, mapDispatchToProps)(Navbar)
+export const NavbarContainer = connect(mapStateToProps)(Navbar)
