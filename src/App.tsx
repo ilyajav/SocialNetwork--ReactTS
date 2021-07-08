@@ -1,4 +1,3 @@
-import {FC} from 'react';
 import './App.css';
 import {Header} from "./components/Header/Header";
 import {Profile} from "./components/Profile/Profile";
@@ -8,11 +7,9 @@ import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
-import {UsersContainer} from "./components/Users/UsersContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
-type AppTypeProps = {}
-
-export const App: FC<AppTypeProps> = () => {
+export const App = () => {
     return (
         <div className='app-wrapper'>
             <Header />

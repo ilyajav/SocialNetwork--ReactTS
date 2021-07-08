@@ -11,6 +11,47 @@ import {
     UsersDataType,
     UserType
 } from "../../redux/users-reducer";
+import React from "react";
+import axios from "axios";
+
+
+type UsersContainerPropsType = {
+    usersData: UsersDataType;
+    follow: (userID: number) => void;
+    unFollow: (userID: number) => void;
+    setUsers: (users: UserType[]) => void;
+    setCurrentPage: (currentPage: number) => void;
+    setTotalUsersCount: (totalUsersCount: number) => void;
+}
+
+class UsersContainer extends React.Component<UsersContainerPropsType> {
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.usersData.currentPage}&count=${this.props.usersData.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalUsersCount(response.data.totalCount)
+            })
+    }
+
+    changeCurrentPage = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.usersData.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            })
+    }
+
+    render() {
+        return <Users
+            usersData={this.props.usersData}
+            follow={this.props.follow}
+            unFollow={this.props.unFollow}
+            onChangeCurrentPage={this.changeCurrentPage}
+        />
+    }
+
+}
 
 type mapStateToPropsType = {
     usersData: UsersDataType
@@ -38,4 +79,4 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
