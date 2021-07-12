@@ -1,6 +1,5 @@
 import {v1} from "uuid";
 
-
 export type ActionDialogsTypes = ReturnType<typeof addDialogMessage>  | ReturnType<typeof changeDialogMessage>
 
 export type DialogUsersDataType = {

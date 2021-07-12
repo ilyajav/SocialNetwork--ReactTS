@@ -1,4 +1,11 @@
-import {addPost, changeProfilePost, ProfileDataType, profileReducer} from "./profile-reducer";
+import {
+    addPost,
+    changeProfilePost,
+    ProfileDataType,
+    profileReducer,
+    ServerProfileType,
+    setUserProfile
+} from "./profile-reducer";
 import {v1} from "uuid";
 
 
@@ -11,7 +18,8 @@ beforeEach(() =>{
             {id: v1(), message: 'Good day', likesCount: 10},
             {id: v1(), message: 'New York', likesCount: 6}
         ],
-        newProfileMessageText: ''
+        newProfileMessageText: '',
+        profile:  <ServerProfileType> {},
     }
 })
 
@@ -32,4 +40,37 @@ test('new post title should be changed', () =>{
     const endState = profileReducer(profileState, action)
 
     expect(endState.newProfileMessageText).toBe('new title')
+})
+
+test('user profile data should be changed', () =>{
+
+    const action = setUserProfile({
+        aboutMe: 'Cat',
+        userid: 5,
+        lookingForAJob: true,
+        lookingForAJobDescription: 'I am developer',
+        fullName: 'Murzik Murzik',
+        contacts: {
+            github: 'github',
+            vk: 'vk',
+            facebook: 'facebook',
+            instagram: 'instagram',
+            twitter: 'twitter',
+            website: 'site.com',
+            youtube: 'youtube',
+            mainLink: '',
+        },
+        photos: {
+            small: '',
+            large: '',
+        },
+
+    })
+    const endState = profileReducer(profileState, action)
+
+    expect(endState.profile.aboutMe).toBe('Cat')
+    expect(endState.profile.userid).toBe(5)
+    expect(endState.profile.fullName).toBe('Murzik Murzik')
+    expect(endState.profile.contacts.github).toBe('github')
+    expect(endState.profile.photos.large).toBeFalsy()
 })

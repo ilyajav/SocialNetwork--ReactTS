@@ -1,3 +1,8 @@
 .items img{
     margin: 5px 10px;
 }
+
+.userPhoto img{
+    width: 150px;
+    height: 150px;
+}

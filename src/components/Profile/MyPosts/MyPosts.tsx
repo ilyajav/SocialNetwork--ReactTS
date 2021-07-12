@@ -1,4 +1,4 @@
-import s from './MyPosts.module.css'
+import style from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {ChangeEvent, createRef, FC} from "react";
 import {ProfileDataType} from "../../../redux/profile-reducer";
@@ -22,11 +22,11 @@ export const MyPosts: FC<MyPostsPropsType> = ({addPost, changeProfilePost, posts
 
     return (
         <div>
-            <div className={s.item}>
+            <div className={style.item}>
                 <div>
                     <span>My posts</span>
                 </div>
-                <div className={s.newPost}>
+                <div className={style.newPost}>
                     <textarea placeholder='Enter your message this' ref={textareaRef} value={postsData.newProfileMessageText}
                               onChange={onChangeTextAreaText}/>
                     <div>

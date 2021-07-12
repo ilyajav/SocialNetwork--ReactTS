@@ -1,5 +1,5 @@
 import {ChangeEvent, createRef, FC} from "react";
-import s from './Dialogs.module.css'
+import style from './Dialogs.module.css'
 import {UserDialog} from "./UserDialog/UserDialog";
 import {UserMessage} from "./UserMessage/UserMessage";
 import {DialogDataType} from "../../redux/dialog-reducer";
@@ -28,15 +28,15 @@ export const Dialogs: FC<DialogsTypeProps> = ({
 
     return (
         <div>
-            <div className={s.item}>
-                <div className={s.users}>
+            <div className={style.item}>
+                <div className={style.users}>
                     {users}
                 </div>
-                <div className={s.usersMessages}>
+                <div className={style.usersMessages}>
                     {userMessage}
                 </div>
             </div>
-            <div className={s.itemRepeat}>
+            <div className={style.itemRepeat}>
                 <div>
                     <textarea placeholder='Repeat' ref={textAreaRef} value={dialogData.newDialogMessage}
                               onChange={onChangeMessage}/>
