@@ -1,24 +1,20 @@
 import React, {FC} from 'react'
-import {UsersDataType} from "../../redux/users-reducer";
+import {unFollowSet, UsersDataType} from "../../redux/users-reducer";
 import style from './Users.module.css'
 import userPhoto from '../../assets/userPhoto.jpg'
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 type UsersPropsType = {
     usersData: UsersDataType;
-    follow: (userID: number) => void;
-    unFollow: (userID: number) => void;
     onChangeCurrentPage: (pageNumber: number) => void;
-    toggleIsFollowingProgress: (isFollowingProgress: boolean, usersID: number) => void;
+    followSet: (id: number) => void;
+    unFollowSet: (id: number) => void;
 }
 
 export const Users: FC<UsersPropsType> = ({
                                               usersData,
-                                              follow,
-                                              unFollow,
                                               onChangeCurrentPage,
-                                              toggleIsFollowingProgress
+                                              followSet,
                                           }) => {
 
     const pagesCount = Math.ceil(usersData.totalUsersCount / usersData.pageSize)
@@ -41,12 +37,6 @@ export const Users: FC<UsersPropsType> = ({
         </div>
         {
             usersData.users.map(u => {
-                const followUser = () => {
-                    follow(u.id)
-                }
-                const unFollowUser = () => {
-                    unFollow(u.id)
-                }
                 return (
                     <div key={u.id}>
                         <div>
@@ -58,28 +48,17 @@ export const Users: FC<UsersPropsType> = ({
                         <div>
                             {
                                 u.followed ?
-                                    <button disabled={usersData.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                        toggleIsFollowingProgress(true, u.id)
-                                        usersAPI.unFollowUser(u.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    unFollowUser()
-                                                }
-                                                toggleIsFollowingProgress(false,  u.id)
-                                            })
-                                    }}>Unfollow</button>
+                                    <button disabled={usersData.followingInProgress.some(id => id === u.id)}
+                                            onClick={() => {
+                                                followSet(u.id)
+                                            }
+                                            }>Unfollow</button>
                                     :
-                                    <button disabled={usersData.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                        toggleIsFollowingProgress(true,  u.id)
-                                        usersAPI.followUser(u.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    followUser()
-                                                }
-                                                toggleIsFollowingProgress(false,  u.id)
-                                            })
-                                    }
-                                    }>Follow</button>
+                                    <button disabled={usersData.followingInProgress.some(id => id === u.id)}
+                                            onClick={() => {
+                                               unFollowSet(u.id)
+                                            }
+                                            }>Follow</button>
                             }
                         </div>
                         <div>

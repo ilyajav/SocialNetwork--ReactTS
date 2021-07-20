@@ -11,7 +11,8 @@ export const Header: FC<HeaderPropsType> = ({isAuth, login}) => {
     return (
         <header className={style.header}>
             <div className={style.login}>
-                {isAuth
+                {
+                    isAuth
                     ? login
                     : <NavLink to={'/login'}>Login</NavLink>
                 }

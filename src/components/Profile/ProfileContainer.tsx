@@ -1,6 +1,5 @@
 import React from "react";
 import {Profile} from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {ServerProfileType, setUserProfile} from "../../redux/profile-reducer";
@@ -8,7 +7,7 @@ import {RouteComponentProps, withRouter} from 'react-router'
 
 type ProfileContainerPropsType = {
     profile: ServerProfileType,
-    setUserProfile: (profile: ServerProfileType) => void,
+    setUserProfile: (id: string) => void,
 }
 
 type PatchProfileType = {
@@ -19,12 +18,9 @@ type PropsType = RouteComponentProps<PatchProfileType> & ProfileContainerPropsTy
 
 export class ProfileContainer extends React.Component<PropsType>{
     componentDidMount() {
-            let userId = this.props.match.params.userId
-            if(!userId) userId = '17765'
-            axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-            .then(response => {
-                this.props.setUserProfile(response.data)
-            })
+             let userID = this.props.match.params.userId
+             if(!userID) userID = '17765'
+             this.props.setUserProfile(userID)
     }
 
     render() {

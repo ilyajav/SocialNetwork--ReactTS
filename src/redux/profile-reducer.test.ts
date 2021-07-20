@@ -4,7 +4,7 @@ import {
     ProfileDataType,
     profileReducer,
     ServerProfileType,
-    setUserProfile
+    userProfile
 } from "./profile-reducer";
 import {v1} from "uuid";
 
@@ -44,7 +44,7 @@ test('new post title should be changed', () =>{
 
 test('user profile data should be changed', () =>{
 
-    const action = setUserProfile({
+    const action = userProfile({
         aboutMe: 'Cat',
         userid: 5,
         lookingForAJob: true,

@@ -1,4 +1,6 @@
 import {v1} from "uuid";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 
 enum ACTION_TYPES {
@@ -10,7 +12,7 @@ enum ACTION_TYPES {
 export type ActionProfileTypes =
     ReturnType<typeof addPost>
     | ReturnType<typeof changeProfilePost>
-    | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof userProfile>
 
 export type PostsType = {
     id: string;
@@ -95,9 +97,18 @@ export const changeProfilePost = (newText: string) => {
     } as const
 }
 
-export const setUserProfile = (profile: ServerProfileType) => {
+export const userProfile = (profile: ServerProfileType) => {
     return {
         type: ACTION_TYPES.SET_USER_PROFILE,
         profile,
     } as const
+}
+
+export const setUserProfile = (id: string) =>{
+    return (dispatch: Dispatch) =>{
+        usersAPI.userProfile(id)
+            .then(data => {
+                dispatch(userProfile(data))
+            })
+    }
 }

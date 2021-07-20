@@ -1,3 +1,6 @@
+import {Dispatch} from 'redux'
+import {usersAPI} from "../api/api";
+
 enum ACTION_TYPES {
     FOLLOW = 'FOLLOW',
     UNFOLLOW = 'UNFOLLOW',
@@ -146,4 +149,41 @@ export const toggleIsFollowingProgress = (isFetching: boolean, userID: number) =
         isFetching,
         userID,
     } as const
+}
+
+export const getUsers = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFetching(true))
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsFetching(false))
+            dispatch(setUsers(data.items))
+            dispatch(setUsersTotalCount(data.totalCount))
+        })
+    }
+}
+
+export const followSet = (id: number) =>{
+    return (dispatch: Dispatch) =>{
+        dispatch(toggleIsFollowingProgress(true, id))
+        usersAPI.unFollowUser(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unFollow(id))
+                }
+                dispatch(toggleIsFollowingProgress(false,  id))
+            })
+    }
+}
+
+export const unFollowSet = (id: number) =>{
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFollowingProgress(true, id))
+        usersAPI.followUser(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(follow(id))
+                }
+                toggleIsFollowingProgress(false, id)
+            })
+    }
 }

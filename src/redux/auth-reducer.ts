@@ -1,3 +1,5 @@
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 enum ACTION_TYPES {
     SET_USER_DATA = 'SET_USER_DATA',
@@ -14,7 +16,7 @@ const initialState: UserAuthData = {
     id: null,
     email: '',
     login: '',
-    isAuth: false
+    isAuth: false,
 }
 
 type ActionAuthTypes = ReturnType<typeof setUserData>
@@ -36,5 +38,16 @@ export const setUserData = (id: number, email: string, login: string) =>{
     return{
         type: ACTION_TYPES.SET_USER_DATA,
         data: {id, email, login},
+    }
+}
+
+export const setAuth = () =>{
+    return (dispatch: Dispatch) =>{
+        usersAPI.authUser().then(data => {
+            if(data.resultCode === 0) {
+                const {id, email, login} = data.data
+                dispatch(setUserData(id, email, login))
+            }
+        })
     }
 }

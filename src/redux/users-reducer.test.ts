@@ -21,6 +21,7 @@ beforeEach(() =>{
         totalUsersCount: 1,
         currentPage: 2,
         isFetching: false,
+        followingInProgress: []
     }
 })
 
@@ -63,6 +64,7 @@ test('User must be added', () =>{
         totalUsersCount: 1,
         currentPage: 2,
         isFetching: false,
+        followingInProgress: [],
     }
 
 
