@@ -5,6 +5,7 @@ enum ACTION_TYPES {
     SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
     SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT',
     SET_IS_FETCHING = 'SET_IS_FETCHING',
+    SET_IS_FOLLOWING_PROGRESS = 'SET_IS_FOLLOWING_PROGRESS'
 }
 
 type ActionUsersType =
@@ -14,6 +15,7 @@ type ActionUsersType =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setUsersTotalCount>
     | ReturnType<typeof toggleIsFetching>
+    | ReturnType<typeof toggleIsFollowingProgress>
 
 export type UsersDataType = typeof initialState
 
@@ -30,12 +32,15 @@ type PhotosType = {
     large: string,
 }
 
+
+
 const initialState = {
     users: [] as UserType[],
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
+    followingInProgress: [] as Array<number>,
 }
 
 export const usersReducer = (state: UsersDataType = initialState, action: ActionUsersType): UsersDataType => {
@@ -75,9 +80,17 @@ export const usersReducer = (state: UsersDataType = initialState, action: Action
                 ...state, totalUsersCount: action.totalUsersCount,
             }
         }
-        case ACTION_TYPES.SET_IS_FETCHING:{
+        case ACTION_TYPES.SET_IS_FETCHING: {
             return {
                 ...state, isFetching: action.isFetching
+            }
+        }
+        case ACTION_TYPES.SET_IS_FOLLOWING_PROGRESS: {
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userID]
+                    : state.followingInProgress.filter(id => id !== action.userID)
             }
         }
     }
@@ -120,9 +133,17 @@ export const setUsersTotalCount = (totalUsersCount: number) => {
     } as const
 }
 
-export const toggleIsFetching = (isFetching: boolean) =>{
-    return{
+export const toggleIsFetching = (isFetching: boolean) => {
+    return {
         type: ACTION_TYPES.SET_IS_FETCHING,
         isFetching,
+    } as const
+}
+
+export const toggleIsFollowingProgress = (isFetching: boolean, userID: number) => {
+    return {
+        type: ACTION_TYPES.SET_IS_FOLLOWING_PROGRESS,
+        isFetching,
+        userID,
     } as const
 }
