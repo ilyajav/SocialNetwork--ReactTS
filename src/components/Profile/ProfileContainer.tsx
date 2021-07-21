@@ -4,10 +4,12 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {ServerProfileType, setUserProfile} from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from 'react-router'
+import {Redirect} from 'react-router-dom'
 
 type ProfileContainerPropsType = {
     profile: ServerProfileType,
     setUserProfile: (id: string) => void,
+    isAuth: boolean,
 }
 
 type PatchProfileType = {
@@ -24,6 +26,9 @@ export class ProfileContainer extends React.Component<PropsType>{
     }
 
     render() {
+
+        if(!this.props.isAuth) return <Redirect to={'/login'} />;
+
         return <>
             <Profile {...this.props} profile={this.props.profile} />
             </>
@@ -31,12 +36,14 @@ export class ProfileContainer extends React.Component<PropsType>{
 }
 
 type mapStateToPropsType = {
-    profile: ServerProfileType
+    profile: ServerProfileType,
+    isAuth: boolean,
 }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        profile: state.profileData.profile
+        profile: state.profileData.profile,
+        isAuth: state.authData.isAuth,
     }
 }
 

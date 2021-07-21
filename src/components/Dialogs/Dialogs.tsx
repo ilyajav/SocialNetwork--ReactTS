@@ -1,19 +1,22 @@
-import {ChangeEvent, createRef, FC} from "react";
+import React, {ChangeEvent, createRef, FC} from "react";
 import style from './Dialogs.module.css'
 import {UserDialog} from "./UserDialog/UserDialog";
 import {UserMessage} from "./UserMessage/UserMessage";
 import {DialogDataType} from "../../redux/dialog-reducer";
+import {Redirect} from "react-router-dom";
 
 type DialogsTypeProps = {
     addDialogMessage: () => void;
     changeDialogMessage: (text: string) => void;
     dialogData: DialogDataType
+    isAuth: boolean,
 }
 
 export const Dialogs: FC<DialogsTypeProps> = ({
                                                   addDialogMessage,
                                                   changeDialogMessage,
-                                                  dialogData
+                                                  dialogData,
+                                                  isAuth,
                                               }) => {
 
     const textAreaRef = createRef<HTMLTextAreaElement>();
@@ -25,6 +28,8 @@ export const Dialogs: FC<DialogsTypeProps> = ({
 
     const users = dialogData.usersInfo.map(data => <UserDialog user={data} key={data.id}/>)
     const userMessage = dialogData.usersMessages.map(data => <UserMessage userMessage={data} key={data.id}/>)
+
+    if(!isAuth) return <Redirect to={'/login'} />;
 
     return (
         <div>

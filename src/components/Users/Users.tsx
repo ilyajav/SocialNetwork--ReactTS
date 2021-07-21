@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import {unFollowSet, UsersDataType} from "../../redux/users-reducer";
+import {UsersDataType} from "../../redux/users-reducer";
 import style from './Users.module.css'
 import userPhoto from '../../assets/userPhoto.jpg'
 import {NavLink} from "react-router-dom";
@@ -14,6 +14,7 @@ type UsersPropsType = {
 export const Users: FC<UsersPropsType> = ({
                                               usersData,
                                               onChangeCurrentPage,
+                                              unFollowSet,
                                               followSet,
                                           }) => {
 

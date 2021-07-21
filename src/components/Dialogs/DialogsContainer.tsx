@@ -8,12 +8,14 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store"
 
 type mapStateToPropsType = {
-    dialogData: DialogDataType
+    dialogData: DialogDataType,
+    isAuth: boolean,
 }
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType =>{
    return{
-      dialogData: state.dialogData
+      dialogData: state.dialogData,
+       isAuth: state.authData.isAuth,
    }
 }
 

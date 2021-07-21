@@ -18,12 +18,6 @@ export const usersAPI = {
                 return response.data
             })
     },
-    authUser() {
-        return instance.get(`auth/me`)
-            .then(response => {
-                return response.data
-            })
-    },
     unFollowUser(id: number) {
         return instance.delete(`follow/${id}`)
             .then(response => {
@@ -42,4 +36,13 @@ export const usersAPI = {
                 return response.data
             })
     }
+}
+
+export const authAPI = {
+    authUser() {
+        return instance.get(`auth/me`)
+            .then(response => {
+                return response.data
+            })
+    },
 }

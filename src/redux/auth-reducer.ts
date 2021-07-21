@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {usersAPI} from "../api/api";
+import {authAPI} from "../api/api";
 
 enum ACTION_TYPES {
     SET_USER_DATA = 'SET_USER_DATA',
@@ -43,7 +43,7 @@ export const setUserData = (id: number, email: string, login: string) =>{
 
 export const setAuth = () =>{
     return (dispatch: Dispatch) =>{
-        usersAPI.authUser().then(data => {
+        authAPI.authUser().then(data => {
             if(data.resultCode === 0) {
                 const {id, email, login} = data.data
                 dispatch(setUserData(id, email, login))

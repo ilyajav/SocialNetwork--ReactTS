@@ -183,7 +183,7 @@ export const unFollowSet = (id: number) =>{
                 if (data.resultCode === 0) {
                     dispatch(follow(id))
                 }
-                toggleIsFollowingProgress(false, id)
+                dispatch(toggleIsFollowingProgress(false, id))
             })
     }
 }
