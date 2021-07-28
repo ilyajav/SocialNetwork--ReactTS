@@ -68,6 +68,6 @@ export const addDialogMessage = () => {
 export const changeDialogMessage = (newMessage: string) => {
     return {
         type: ACTION_TYPES.CHANGE_DIALOG_MESSAGE,
-        newMessage,
+            newMessage,
     } as const
 }
