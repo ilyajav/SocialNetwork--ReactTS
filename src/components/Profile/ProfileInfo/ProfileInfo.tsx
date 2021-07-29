@@ -6,10 +6,12 @@ import userPhoto from "./../../../assets/userPhoto.jpg"
 import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoPropsType = {
-    profile: ServerProfileType,
+    profile: ServerProfileType;
+    status: string;
+    changeUserStatus: (status: string) => void;
 }
 
-export const ProfileInfo: FC<ProfileInfoPropsType> = ({profile}) => {
+export const ProfileInfo: FC<ProfileInfoPropsType> = ({profile, status, changeUserStatus}) => {
 
     if(!profile) return  <Preloader />
 
@@ -26,7 +28,7 @@ export const ProfileInfo: FC<ProfileInfoPropsType> = ({profile}) => {
                     <h3>Status:</h3>
                 </div>
                 <div>
-                    <ProfileStatus status={'Hello!'}/>
+                    <ProfileStatus status={status} changeUserStatus={changeUserStatus}/>
                 </div>
             </div>
         </div>

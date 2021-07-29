@@ -5,12 +5,14 @@ import {ServerProfileType} from "../../redux/profile-reducer";
 
 type ProfileTypeProps = {
     profile: ServerProfileType;
+    status: string;
+    changeUserStatus: (status: string) => void;
 }
 
-export const Profile: FC<ProfileTypeProps> = ({profile}) => {
+export const Profile: FC<ProfileTypeProps> = ({profile, status, changeUserStatus}) => {
     return (
         <div>
-            <ProfileInfo profile={profile} />
+            <ProfileInfo profile={profile} status={status} changeUserStatus={changeUserStatus}/>
             <MyPostsContainer />
         </div>
     )

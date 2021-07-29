@@ -1,18 +1,20 @@
 import {v1} from "uuid";
 import {Dispatch} from "redux";
-import {usersAPI} from "../api/api";
+import {profileAPI} from "../api/api";
 
 
 enum ACTION_TYPES {
     ADD_PROFILE_POST = 'ADD-PROFILE-POST',
     CHANGE_PROFILE_POST = 'CHANGE-PROFILE-POST',
     SET_USER_PROFILE = 'SET_USER_PROFILE',
+    SET_USER_STATUS = 'SET_USER_STATUS',
 }
 
 export type ActionProfileTypes =
     ReturnType<typeof addPost>
     | ReturnType<typeof changeProfilePost>
     | ReturnType<typeof userProfile>
+    | ReturnType<typeof userStatus>
 
 export type PostsType = {
     id: string;
@@ -29,7 +31,8 @@ const initialState = {
         {id: v1(), message: 'New York', likesCount: 6}
     ],
     newProfileMessageText: '',
-    profile: <ServerProfileType> {},
+    profile: <ServerProfileType>{},
+    status: '',
 }
 
 
@@ -78,6 +81,12 @@ export const profileReducer = (state: ProfileDataType = initialState, action: Ac
                 ...state,
                 profile: action.profile
             }
+        case ACTION_TYPES.SET_USER_STATUS:
+            debugger
+              return {
+                  ...state,
+                  status: action.status
+              }
         default:
             return state
     }
@@ -104,11 +113,40 @@ export const userProfile = (profile: ServerProfileType) => {
     } as const
 }
 
-export const setUserProfile = (id: string) =>{
+export const userStatus = (status: string) => {
+    return {
+        type: ACTION_TYPES.SET_USER_STATUS,
+        status,
+    } as const
+}
+
+export const setUserProfile = (id: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.userProfile(id)
+            .then(response => {
+                dispatch(userProfile(response.data))
+            })
+    }
+}
+
+export const setUserStatus = (id: number) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.userStatus(id)
+            .then(response => {
+                dispatch(userStatus(response.data))
+            })
+    }
+}
+
+export const changeUserStatus = (status: string) => {
     return (dispatch: Dispatch) =>{
-        usersAPI.userProfile(id)
-            .then(data => {
-                dispatch(userProfile(data))
+        profileAPI.newUserStatus(status)
+            .then(response =>{
+                debugger
+                if(response.data.resultCode === 0){
+                    debugger
+                    dispatch(userStatus(status))
+                }
             })
     }
 }
