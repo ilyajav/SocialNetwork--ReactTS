@@ -16,12 +16,12 @@ export const Dialogs: FC<DialogsTypeProps> = ({
                                                   dialogData,
                                               }) => {
 
-    const textAreaRef = createRef<HTMLTextAreaElement>();
 
     const onAddNewMessage = () => addDialogMessage()
     const onChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
         changeDialogMessage(e.currentTarget.value)
     }
+
 
     const users = dialogData.usersInfo.map(data => <UserDialog user={data} key={data.id}/>)
     const userMessage = dialogData.usersMessages.map(data => <UserMessage userMessage={data} key={data.id}/>)
@@ -39,7 +39,7 @@ export const Dialogs: FC<DialogsTypeProps> = ({
             </div>
             <div className={style.itemRepeat}>
                 <div>
-                    <textarea placeholder='Repeat' ref={textAreaRef} value={dialogData.newDialogMessage}
+                    <textarea placeholder='Repeat' value={dialogData.newDialogMessage}
                               onChange={onChangeMessage}/>
                 </div>
                 <div>

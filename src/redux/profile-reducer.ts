@@ -82,7 +82,6 @@ export const profileReducer = (state: ProfileDataType = initialState, action: Ac
                 profile: action.profile
             }
         case ACTION_TYPES.SET_USER_STATUS:
-            debugger
               return {
                   ...state,
                   status: action.status
@@ -138,15 +137,14 @@ export const setUserStatus = (id: number) => {
     }
 }
 
+
+
+
 export const changeUserStatus = (status: string) => {
-    return (dispatch: Dispatch) =>{
-        profileAPI.newUserStatus(status)
-            .then(response =>{
-                debugger
-                if(response.data.resultCode === 0){
-                    debugger
+    return async (dispatch: Dispatch) =>{
+       const newStatus = await profileAPI.newUserStatus(status)
+                if(newStatus.data.resultCode === 0){
                     dispatch(userStatus(status))
                 }
-            })
     }
 }

@@ -4,7 +4,7 @@ import {
     ProfileDataType,
     profileReducer,
     ServerProfileType,
-    userProfile
+    userProfile, userStatus
 } from "./profile-reducer";
 import {v1} from "uuid";
 
@@ -20,6 +20,7 @@ beforeEach(() =>{
         ],
         newProfileMessageText: '',
         profile:  <ServerProfileType> {},
+        status: 'Hello!'
     }
 })
 
@@ -73,4 +74,12 @@ test('user profile data should be changed', () =>{
     expect(endState.profile.fullName).toBe('Murzik Murzik')
     expect(endState.profile.contacts.github).toBe('github')
     expect(endState.profile.photos.large).toBeFalsy()
+})
+
+test('status should be changed' , () =>{
+
+    const action = userStatus('Catsss!')
+    const endState = profileReducer(profileState, action)
+
+    expect(endState.status).toBe('Catsss!')
 })

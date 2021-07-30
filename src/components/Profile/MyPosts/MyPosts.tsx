@@ -1,6 +1,6 @@
 import style from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {ChangeEvent, createRef, FC} from "react";
+import {ChangeEvent, FC} from "react";
 import {ProfileDataType} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
@@ -13,7 +13,6 @@ export const MyPosts: FC<MyPostsPropsType> = ({addPost, changeProfilePost, posts
 
     const post = postsData.posts.map(post => <Post postInfo={post} key={post.id}/>)
 
-    const textareaRef = createRef<HTMLTextAreaElement>();
 
     const onAddPosts = () => addPost()
     const onChangeTextAreaText = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,7 +26,7 @@ export const MyPosts: FC<MyPostsPropsType> = ({addPost, changeProfilePost, posts
                     <span>My posts</span>
                 </div>
                 <div className={style.newPost}>
-                    <textarea placeholder='Enter your message this' ref={textareaRef} value={postsData.newProfileMessageText}
+                    <textarea placeholder='Enter your message this'  value={postsData.newProfileMessageText}
                               onChange={onChangeTextAreaText}/>
                     <div>
                         <button onClick={onAddPosts}>Add post</button>
